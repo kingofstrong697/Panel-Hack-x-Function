@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Hack x Function</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .panel {
+            width: 350px;
+            background-color: #111;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+        .tab {
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .active {
+            text-decoration: underline;
+        }
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .toggle {
+            width: 40px;
+            height: 20px;
+            background: gray;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+        .toggle::before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            transition: 0.3s;
+        }
+        .toggle.active {
+            background: #00ff00;
+        }
+        .toggle.active::before {
+            left: 20px;
+        }
+        select {
+            width: 100%;
+            padding: 5px;
+            background: #222;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .human {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            position: absolute;
+            top: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .human .head {
+            width: 50px;
+            height: 50px;
+            background: #00ff00;
+            margin: 0 auto;
+        }
+        .human .body {
+            width: 30px;
+            height: 100px;
+            background: #00ff00;
+            margin: 0 auto;
+        }
+        .human .arm {
+            width: 20px;
+            height: 80px;
+            background: #00ff00;
+            margin: 5px auto;
+            transform-origin: top;
+        }
+        .human .left-arm {
+            position: absolute;
+            left: calc(50% - 32px);
+            top: 70px;
+            transform: rotate(45deg);
+        }
+        .human .right-arm {
+            position: absolute;
+            right: calc(50% - 32px);
+            top: 70px;
+            transform: rotate(-45deg);
+        }
+        .human .leg {
+            width: 20px;
+            height: 80px;
+            background: #00ff00;
+            margin: 5px auto;
+        }
+        .human .left-leg {
+            position: absolute;
+            left: calc(50% - 25px);
+            top: 145px;
+        }
+        .human .right-leg {
+            position: absolute;
+            right: calc(50% - 25px);
+            top: 145px;
+        }
+        .admin-info, .effect-options {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .effect {
+            width: 50px;
+            height: 50px;
+            border: 3px dashed rgba(0, 255, 0, 0.5);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        @keyframes spin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <h1>Panel Hack x Function</h1>
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('aim')">Aim</div>
+        <div class="tab" onclick="showTab('admin')">Admin</div>
+        <div class="tab" onclick="showTab('effect')">Effect</div>
+    </div>
+    <div id="options">
+        <div class="option">
+            <span>On cân check</span>
+            <div class="toggle" onclick="toggleSwitch(this, 'human', 1000)"></div>
+        </div>
+        <div class="option">
+            <span>On Antiband</span>
+            <div class="toggle" onclick="toggleSwitch(this, null, 1000)"></div>
+       
+        </div>
+        <div class="option">
+            <span>On Aim Assist</span>
+            <div class="toggle" onclick="toggleSwitch(this, null, 1000)"></div>
+        </div>
+        <div class="option">
+            <span>On Norecoil 5.0</span>
+            <div class="toggle" onclick="toggleSwitch(this, null, 1000)"></div>
+        </div>
+        <div id="human" class="human">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="arm left-arm"></div>
+            <div class="arm right-arm"></div>
+            <div class="leg left-leg"></div>
+            <div class="leg right-leg"></div>
+        </div>
+    </div>
+    <div id="admin-info" class="admin-info">
+        <p>Admin make Panel Hack x Function RIN (Ghung)</p>
+        <p>Liên hệ Zalo Admin: 0835051246</p>
+        <p>Liên hệ Mess Admin: Gia Hưng Bùi</p>
+    </div>
+    <div id="effect-options" class="effect-options">
+        <div class="option">
+            <span>CPU Optimization</span>
+            <div class="toggle" onclick="toggleEffect(this, 1000)"></div>
+        </div>
+        <div class="option">
+            <span>RAM CLEANER</span>
+            <div class="toggle" onclick="toggleEffect(this, 1000)"></div>
+        </div>
+        <div class="option">
+            <span>Performance Boost</span>
+            <div class="toggle" onclick="toggleEffect(this, 1000)"></div>
+        </div>
+        <div class="option">
+            <span>Storage Optimization</span>
+            <div class="toggle" onclick="toggleEffect(this, 1000)"></div>
+        </div>
+    </div>
+    <div id="effect" class="effect"></div>
+</div>
+
+<script>
+    function toggleSwitch(element, targetId, duration) {
+        element.classList.toggle("active");
+        const effect = document.getElementById('effect');
+        if (element.classList.contains("active")) {
+            effect.style.display = 'block';
+            effect.style.animation = `spin ${duration}ms linear infinite`;
+            setTimeout(() => {
+                effect.style.display = 'none';
+                effect.style.animation = '';
+                if (targetId) {
+                    const target = document.getElementById(targetId);
+                    const head = target.querySelector('.head');
+                    head.style.backgroundColor = "red";
+                }
+            }, duration);
+        } else {
+            if (targetId) {
+                const target = document.getElementById(targetId);
+                const head = target.querySelector('.head');
+                head.style.backgroundColor = "#00ff00";
+            }
+        }
+    }
+
+    function showTab(tab) {
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
+
+        document.getElementById('options').style.display = 'none';
+        document.getElementById('admin-info').style.display = 'none';
+        document.getElementById('effect-options').style.display = 'none';
+
+        if (tab === 'aim') {
+            document.getElementById('options').style.display = 'block';
+        } else if (tab === 'admin') {
+            document.getElementById('admin-info').style.display = 'block';
+        } else if (tab === 'effect') {
+            document.getElementById('effect-options').style.display = 'block';
+        }
+    }
+
+    function toggleEffect(element, duration) {
+        element.classList.toggle("active");
+        const effect = document.getElementById('effect');
+        if (element.classList.contains("active")) {
+            effect.style.display = 'block';
+            effect.style.animation = `spin ${duration}ms linear infinite`;
+            setTimeout(() => {
+                effect.style.display = 'none';
+                effect.style.animation = '';
+            }, duration);
+        }
+    }
+</script>
+
+</body>
+</html>
